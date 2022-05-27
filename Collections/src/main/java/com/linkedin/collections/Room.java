@@ -1,98 +1,112 @@
 package com.linkedin.collections;
 
-public class Room {
+import java.util.Comparator;
 
-	private String name;
+public class Room implements Comparable<Room> {
 
-	private String type;
+    public static Comparator<Room> RATE_COMPARATOR = Comparator.comparing(Room::getRate)
+            .thenComparing(Room::getName)
+            .thenComparing(Room::getType);
 
-	private int capacity;
+    private String name;
 
-	private double rate;
-	
-	private boolean petFriendly;
+    private String type;
 
-	public Room(String name, String type, int capacity, double rate) {
-		this.name = name;
-		this.type = type;
-		this.capacity = capacity;
-		this.rate = rate;
-	}
+    private int capacity;
 
-	public String getName() {
-		return name;
-	}
+    private double rate;
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    private boolean petFriendly;
 
-	public String getType() {
-		return type;
-	}
+    public Room(String name, String type, int capacity, double rate) {
+        this.name = name;
+        this.type = type;
+        this.capacity = capacity;
+        this.rate = rate;
+    }
 
-	public void setType(String type) {
-		this.type = type;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public int getCapacity() {
-		return capacity;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setCapacity(int capacity) {
-		this.capacity = capacity;
-	}
+    public String getType() {
+        return type;
+    }
 
-	public double getRate() {
-		return rate;
-	}
+    public void setType(String type) {
+        this.type = type;
+    }
 
-	public void setRate(double rate) {
-		this.rate = rate;
-	}
-	
-	public boolean isPetFriendly() {
-		return petFriendly;
-	}
+    public int getCapacity() {
+        return capacity;
+    }
 
-	public void setPetFriendly(boolean petFriendly) {
-		this.petFriendly = petFriendly;
-	}
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
+    }
 
-	@Override
-	public String toString() {
-		return "Room [name=" + name + ", type=" + type + ", capacity=" + capacity + ", rate=" + rate + "]";
-	}
+    public double getRate() {
+        return rate;
+    }
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		long temp;
-		temp = Double.doubleToLongBits(rate);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
-		return result;
-	}
+    public void setRate(double rate) {
+        this.rate = rate;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-				
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Room other = (Room) obj;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
-		if (Double.doubleToLongBits(rate) != Double.doubleToLongBits(other.rate))
-			return false;
-		return true;
-	}
+    public boolean isPetFriendly() {
+        return petFriendly;
+    }
+
+    public void setPetFriendly(boolean petFriendly) {
+        this.petFriendly = petFriendly;
+    }
+
+    @Override
+    public String toString() {
+        return "Room [name=" + name + ", type=" + type + ", capacity=" + capacity + ", rate=" + rate + "]";
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((name == null) ? 0 : name.hashCode());
+        long temp;
+        temp = Double.doubleToLongBits(rate);
+        result = prime * result + (int) (temp ^ (temp >>> 32));
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+
+        System.out.format("Comparing %s with %s%n", this.name, ((Room) obj).name);
+
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Room other = (Room) obj;
+        if (name == null) {
+            if (other.name != null)
+                return false;
+        } else if (!name.equals(other.name))
+            return false;
+        if (Double.doubleToLongBits(rate) != Double.doubleToLongBits(other.rate))
+            return false;
+        return true;
+    }
+
+    @Override
+    public int compareTo(Room o) {
+        int result = this.name.compareTo(o.getName());
+        return result != 0 ? result : this.type.compareTo(o.type);
+    }
 
 }
